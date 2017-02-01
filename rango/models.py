@@ -10,6 +10,8 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        if self.views < 0:
+            self.views = 0
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
@@ -24,6 +26,8 @@ class Page(models.Model):
     title = models.CharField(max_length=128)
     url = models.URLField()
     views = models.IntegerField(default=0)
+    #first_visit = models.DateField()
+    #last_visit = models.DateField()
 
     def __str__(self):  # For Python 2, use __unicode__ too
         return self.title
