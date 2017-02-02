@@ -51,7 +51,12 @@ def show_category(request, category_name_slug):
     return render(request, 'rango/category.html', context_dict)
 
 def about(request):
-    return render(request, 'rango/about.html')
+    # prints out whether the method is a GET or a POST
+    print(request.method)
+    # prints out the user name, if no one is logged in it prints `AnonymousUser`
+    print(request.user)
+    return render(request, 'rango/about.html', {})
+
 
 def add_category(request):
     form = CategoryForm()
@@ -100,10 +105,3 @@ def add_page(request, category_name_slug):
 
     context_dict = {'form':form, 'category': category}
     return render(request, 'rango/add_page.html', context_dict)
-
-def add_cat(name, views, likes):
-    c = Category.objects.get_or_create(name=name)[0]
-    c.views = views
-    c.likes = likes
-    c.save()
-    return c
